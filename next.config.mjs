@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
+
+const BLOG_URL = 'https://10qjc-raugh-blog.vercel.app';
+
 const nextConfig = {
   assetPrefix: "/take-a-photo-for-your-girlfriend-static",
   typescript: {
@@ -7,7 +10,21 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-
+  async rewrites() {
+    return [
+      // blog
+      {
+        source: "/:path(blog|blog/.*)",
+        destination: `${BLOG_URL}/:path`,
+      },
+      {
+        source: "/blog-static/_next/:path+",
+        destination: `${BLOG_URL}/blog-static/_next/:path+`,
+      },
+    ];
+  },
 }
+
+
 
 export default nextConfig
